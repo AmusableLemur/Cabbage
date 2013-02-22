@@ -18,9 +18,21 @@ $app->get('/', function() use ($app) {
     ));
 });
 
+$app->post('/', function() use ($app) {
+    return $app['twig']->render('overview.html.twig', array(
+        'messages' => 'Gallery created'
+    ));
+});
+
 $app->get('/view/{name}', function($name) use($app) {
     return $app['twig']->render('view.html.twig', array(
         'name' => $name
+    ));
+});
+
+$app->post('/view/{name}', function() use ($app) {
+    return $app['twig']->render('overview.html.twig', array(
+        'messages' => 'Image uploaded'
     ));
 });
 
