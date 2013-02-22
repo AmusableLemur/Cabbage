@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cabbage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ app.request.basepath }}/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css">
+        body {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .container-narrow {
+            margin: 0 auto;
+            max-width: 700px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="{{ app.request.basepath }}/">Cabbage</a>
+                <button type="submit" class="btn pull-right"><i class="icon-th"></i> Create new album</button>
+            </div>
+        </div>
+        {% block body %}{% endblock %}
+    </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+    <script type="text/javascript" src="{{ app.request.basepath }}/static/js/bootstrap.js"></script>
+    <script>
+        $(function() {
+            $(".thumbnail").tooltip({
+                placement: 'bottom',
+                trigger: 'hover'
+            });
+        });
+    </script>
+</body>
+
+</html>
+
