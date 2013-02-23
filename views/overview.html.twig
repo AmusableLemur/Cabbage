@@ -2,14 +2,12 @@
 
 {% block body %}
     <ul class="thumbnails">
-        {% for gallery in galleries %}
+        {% for gallery in galleries if gallery != null %}
             <li class="span3">
-                <a href="#" class="thumbnail" title="{{ gallery }}">
-                    <img src="http://placekitten.com/300/200" alt="">
+                <a href="{{ app.request.basepath }}/view/{{ gallery.name }}/{{ gallery.image }}" class="thumbnail" title="{{ gallery.name }}">
+                    <img src="{{ app.request.basepath }}/galleries/{{ gallery.name }}/{{ gallery.image }}" alt="">
                 </a>
             </li>
-        {% else %}
-            <h1>No galleries where found</h1>
         {% endfor %}
     </ul>
 {% endblock %}
