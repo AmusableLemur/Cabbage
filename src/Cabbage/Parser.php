@@ -29,23 +29,23 @@ class Parser
                 }
 
                 $directory = dir($this->path.$name);
-                $image = null;
+                $images = array();
 
                 while (($file = $directory->read()) !== false) {
                     if ($this->isImage($file)) {
-                        $image = $file;
-
-                        break;
+                        $images[] = new Image($this->path.$name.
+                            DIRECTORY_SEPARATOR.$file);
                     }
                 }
 
-                if ($image === null) {
+                if (count($images) < 1) {
                     return null;
                 }
 
-                $gallery = array();
-                $gallery['name'] = $name;
-                $gallery['image'] = $image;
+                $gallery = new Gallery();
+
+                $gallery->setName($name);
+                $gallery->addImages($images);
 
                 return $gallery;
             },
