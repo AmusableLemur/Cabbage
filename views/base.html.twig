@@ -10,11 +10,6 @@
             padding-top: 20px;
             padding-bottom: 40px;
         }
-
-        .container-narrow {
-            margin: 0 auto;
-            max-width: 700px;
-        }
     </style>
 </head>
 
@@ -23,7 +18,10 @@
         <div class="navbar">
             <div class="navbar-inner">
                 <a class="brand" href="{{ app.request.basepath }}/">Cabbage</a>
-                <button type="submit" class="btn pull-right"><i class="icon-th"></i> Create new album</button>
+                <form action="{{ app.request.basepath }}/" class="navbar-form pull-right" method="post">
+                    <input type="text" name="name" placeholder="Gallery name">
+                    <button class="btn btn-success" type="submit">Create new album</button>
+                </form>
             </div>
         </div>
         {% block body %}{% endblock %}
