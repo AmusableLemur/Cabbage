@@ -7,12 +7,12 @@
             <a class="btn"><i class="icon-share"></i> Upload image</a>
             <a class="btn"><i class="icon-download"></i> Download album</a>
         </div>
-        <h1>Nice pussy <small>Image 1 of 123</small></h1>
+        <h1>{{ gallery }} <small>Image 1 of 123</small></h1>
     </legend>
     <ul class="thumbnails pull-right">
         <li class="span12">
             <div class="thumbnail">
-                <img src="http://placekitten.com/1160/600" alt="">
+                <img src="{{ app.request.basepath }}/galleries/{{ gallery }}/{{ image }}" alt="">
             </div>
         </li>
         <li class="span3">

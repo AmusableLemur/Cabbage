@@ -68,6 +68,7 @@ $app->get('/', function() use ($app) {
  */
 $app->get('/view/{gallery}/{image}', function($gallery, $image) use($app) {
     return $app['twig']->render('view.html.twig', array(
+        'gallery' => $gallery,
         'image' => $image
     ));
 });
