@@ -22,7 +22,7 @@ class Parser
      */
     public function getGalleries()
     {
-        return array_map(
+        $galleries = array_map(
             function ($name) {
                 if (!$this->isDirectory($name)) {
                     return null;
@@ -51,6 +51,8 @@ class Parser
             },
             scandir($this->path)
         );
+
+        return array_filter($galleries);
     }
 
     /**
