@@ -22,12 +22,7 @@ $app->get('/', 'Cabbage\Controller::overview');
 /**
  * Shows a single image
  */
-$app->get('/view/{gallery}/{image}', function($gallery, $image) use($app) {
-    return $app['twig']->render('view.html.twig', array(
-        'gallery' => $gallery,
-        'image' => $image
-    ));
-});
+$app->get('/view/{gallery}/{image}', 'Cabbage\Controller::view');
 
 $app->run();
 

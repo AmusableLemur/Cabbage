@@ -53,5 +53,13 @@ class Controller
             'galleries' => $galleries
         ));
     }
+
+    public function view(Request $request, Application $app, $gallery, $image)
+    {
+        return $app['twig']->render('view.html.twig', array(
+            'gallery' => $gallery,
+            'image' => $image
+        ));
+    }
 }
 
