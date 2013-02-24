@@ -1,40 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <legend>
-        <div class="btn-group pull-right">
-            <a class="btn"><i class="icon-edit"></i> Edit album</a>
-            <a class="btn"><i class="icon-share"></i> Upload image</a>
+    <div class="row">
+        <div class="span8">
+            <ul class="thumbnails">
+                <div class="thumbnail span8">
+                    <img src="{{ app.request.basepath }}/image/{{ image.hash }}" alt="">
+                </div>
+            </ul>
+        </div>
+        <div class="span4">
+            <legend>
+                <h1>{{ gallery.name }}</h1>
+            </legend>
+            <ul class="thumbnails pull-right">
+                <li class="span2">
+                    <a href="#" class="thumbnail" title="Nice pussy">
+                        <img src="http://placekitten.com/300/200" alt="">
+                    </a>
+                </li>
+                <li class="span2">
+                    <a href="#" class="thumbnail">
+                        <img src="http://placekitten.com/300/200" alt="">
+                    </a>
+                </li>
+                <li class="span2">
+                    <a href="#" class="thumbnail">
+                        <img src="http://placekitten.com/300/200" alt="">
+                    </a>
+                </li>
+                <li class="span2">
+                    <a href="#" class="thumbnail">
+                        <img src="http://placekitten.com/300/200" alt="">
+                    </a>
+                </li>
+            </ul>
             <a class="btn"><i class="icon-download"></i> Download album</a>
         </div>
-        <h1>{{ gallery.name }} <small>Image 1 of 123</small></h1>
-    </legend>
-    <ul class="thumbnails pull-right">
-        <li class="span12">
-            <div class="thumbnail">
-                <img src="{{ app.request.basepath }}/image/{{ image.hash }}" alt="">
-            </div>
-        </li>
-        <li class="span3">
-            <a href="#" class="thumbnail" title="Nice pussy">
-                <img src="http://placekitten.com/300/200" alt="">
-            </a>
-        </li>
-        <li class="span3">
-            <a href="#" class="thumbnail">
-                <img src="http://placekitten.com/300/200" alt="">
-            </a>
-        </li>
-        <li class="span3">
-            <a href="#" class="thumbnail">
-                <img src="http://placekitten.com/300/200" alt="">
-            </a>
-        </li>
-        <li class="span3">
-            <a href="#" class="thumbnail">
-                <img src="http://placekitten.com/300/200" alt="">
-            </a>
-        </li>
-    </ul>
+    </div>
 {% endblock %}
 
