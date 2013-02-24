@@ -37,7 +37,11 @@ class Image
 
     public function getChannels()
     {
-        $channels = $this->data['channels'];
+        if (!isset($this->getData()['channels'])) {
+            return null;
+        }
+
+        $channels = $this->getData()['channels'];
 
         switch ($channels) {
             case 3:
