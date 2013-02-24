@@ -76,7 +76,7 @@ class Controller
         $database = new Database($app);
 
         return $app['twig']->render('view.html.twig', array(
-            'gallery' => 'asdf',
+            'gallery' => $database->getGallery($gallery),
             'image' => $database->getImage($hash)
         ));
     }

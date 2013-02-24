@@ -20,8 +20,9 @@ class Database
         $this->db->executeUpdate(
             "CREATE TABLE IF NOT EXISTS galleries (
                 id INTEGER PRIMARY KEY,
+                ident TEXT,
                 name TEXT,
-                hash TEXT
+                UNIQUE (ident) ON CONFLICT IGNORE
             );
 
             CREATE TABLE IF NOT EXISTS images (
@@ -36,24 +37,24 @@ class Database
     public function getGalleries()
     {
         $galleries = array();
-        $result = $this->db->fetchAll("SELECT hash FROM galleries");
+        $result = $this->db->fetchAll("SELECT ident FROM galleries");
 
         foreach ($result as $row) {
-            $galleries[] = $this->getGallery($row['hash']);
+            $galleries[] = $this->getGallery($row['ident']);
         }
 
         return $galleries;
     }
 
-    public function getGallery($hash)
+    public function getGallery($ident)
     {
         $result = $this->db->fetchAssoc(
             "SELECT
                 id,
                 name
             FROM galleries
-            WHERE hash = ?",
-            array($hash)
+            WHERE ident = ?",
+            array($ident)
         );
 
         $gallery = new Gallery();
@@ -92,15 +93,15 @@ class Database
     {
         $this->db->executeUpdate(
             "INSERT INTO galleries (
-                name,
-                hash
+                ident,
+                name
             ) VALUES (
-                :name,
-                :hash
+                :ident,
+                :name
             )",
             array(
                 'name' => $gallery->getName(),
-                'hash' => $gallery->getHash()
+                'ident' => $gallery->getIdent()
             )
         );
 

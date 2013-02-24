@@ -22,9 +22,9 @@ class Gallery
         return reset($this->images);
     }
 
-    public function getHash()
+    public function getIdent()
     {
-        return sha1($this->name);
+        return strtolower(str_replace(' ', '_', $this->name));
     }
 
     public function getImages()
