@@ -17,6 +17,11 @@ class Gallery
         $this->images += $images;
     }
 
+    public function getArchive()
+    {
+        return new Archive($this);
+    }
+
     public function getCoverImage()
     {
         return reset($this->images);

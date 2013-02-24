@@ -8,6 +8,27 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller
 {
+    public function download(Request $request, Application $app, $gallery)
+    {
+        $database = new Database($app);
+        $gallery = $database->getGallery($gallery);
+        $response = new Response();
+
+        if ($gallery === null) {
+            $response->setStatusCode(404);
+        }
+        else {
+            $response->setContent($gallery->getArchive());
+            $response->setStatusCode(200);
+            $response->headers->set('Content-Type', 'application/octet-stream');
+            $response->headers->set('Content-Disposition', 'attachment; filename='.
+                $gallery->getIdent().'.zip');
+            $response->headers->set('Content-Transfer-Encodinf', 'binary');
+        }
+
+        return $response;
+    }
+
     public function image(Request $request, Application $app, $hash)
     {
         $database = new Database($app);
