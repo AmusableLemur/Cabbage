@@ -42,8 +42,8 @@
         <div class="navbar">
             <div class="navbar-inner">
                 <a class="brand" href="{{ app.request.basepath }}/">Cabbage</a>
-                <form action="{{ app.request.basepath }}/search/" class="navbar-form pull-right" method="post">
-                    <input type="text" name="name" placeholder="Search">
+                <form action="{{ app.request.basepath }}/search" class="navbar-form pull-right" method="post">
+                    <input type="text" name="s" placeholder="Search">
                     <button class="btn btn-success" type="submit"><i class="icon-search"></i></button>
                 </form>
             </div>

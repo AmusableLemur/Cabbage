@@ -5,9 +5,12 @@ define('ARCHIVES_PATH', 'archives/');
 define('GALLERIES_PATH', 'galleries/');
 define('THUMBNAIL_PATH', 'thumbnails/');
 
-require_once __DIR__.'/vendor/autoload.php'; 
+require_once __DIR__.'/vendor/autoload.php';
 
-$app = new Silex\Application();
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
+
+$app = new Application();
 
 $app['debug'] = true;
 
@@ -51,6 +54,26 @@ $app->get('/thumbnail/{hash}', 'Cabbage\Controller::thumbnail');
  * Refreshes the database
  */
 $app->get('/refresh', 'Cabbage\Controller::refresh');
+
+/**
+ * Redirects to real search
+ */
+$app->post('/search', function(Application $app, Request $request) {
+    $terms = $request->get('s');
+    $terms = trim(strtolower($terms));
+
+    if (strlen($terms) < 1) {
+        return $app->redirect($request->getBaseUrl());
+    }
+    else {
+        return $app->redirect($request->getBaseUrl().'/search/'.str_replace(' ', '+', $terms));
+    }
+});
+
+/**
+ * Search feature
+ */
+$app->get('/search/{terms}', 'Cabbage\Controller::search');
 
 $app->run();
 

@@ -75,6 +75,15 @@ class Controller
         return $app->redirect($request->getBaseUrl());
     }
 
+    public function search(Request $request, Application $app, $terms)
+    {
+        $database = new Database($app);
+
+        return $app['twig']->render('overview.html.twig', array(
+            'galleries' => $database->findGalleries($terms)
+        ));
+    }
+
     public function thumbnail(Request $request, Application $app, $hash)
     {
         $database = new Database($app);

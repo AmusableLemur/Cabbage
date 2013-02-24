@@ -34,6 +34,26 @@ class Database
         );
     }
 
+    public function findGalleries($terms)
+    {
+        $terms = explode('+', $terms);
+        $qb = $this->db->createQueryBuilder();
+
+        $qb->select('g.ident')->from('galleries', 'g');
+
+        foreach ($terms as $term) {
+            $qb->orWhere("g.name LIKE '%".$term."%'");
+        }
+
+        $galleries = array();
+
+        foreach ($qb->execute()->fetchAll(\PDO::FETCH_COLUMN) as $ident) {
+            $galleries[] = $this->getGallery($ident);
+        }
+
+        return $galleries;
+    }
+
     public function getGalleries()
     {
         $galleries = array();
