@@ -38,6 +38,15 @@ class Gallery
         return null;
     }
 
+    private function getImageKey($hash)
+    {
+        foreach ($this->images as $key => $image) {
+            if ($image->getHash() === $hash) {
+                return $key;
+            }
+        }
+    }
+
     public function getImages()
     {
         return $this->images;
@@ -46,6 +55,26 @@ class Gallery
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Returns the image after the one specified
+     * @param  string $hash
+     * @return Image
+     */
+    public function getNextImage($hash)
+    {
+        return $this->images[$this->getImageKey($hash) + 1];
+    }
+
+    /**
+     * Returns the image before the one specified
+     * @param  string $hash
+     * @return Image
+     */
+    public function getPreviousImage($hash)
+    {
+        return $this->images[$this->getImageKey($hash) - 1];
     }
 
     public function setName($name)
