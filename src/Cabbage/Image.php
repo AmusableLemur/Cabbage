@@ -7,9 +7,9 @@ class Image
     private $file;
     private $hash;
 
-    public function __construct($file)
+    public function __construct($file, $hash = null)
     {
-        $this->hash = sha1(file_get_contents($file));
+        $this->hash = $hash === null ? sha1(file_get_contents($file)) : $hash;
         $this->file = explode(DIRECTORY_SEPARATOR, $file);
         $this->file = array_pop($this->file);
     }
