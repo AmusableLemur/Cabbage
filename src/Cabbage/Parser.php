@@ -36,8 +36,6 @@ class Parser
                         $image = new Image($this->path.$name.
                             DIRECTORY_SEPARATOR.$file);
 
-                        $image->generateThumbnail(THUMBNAIL_PATH);
-
                         $images[] = $image;
                     }
                 }
