@@ -13,30 +13,17 @@
             <legend>
                 <h1>{{ gallery.name }}</h1>
             </legend>
-            <ul class="thumbnails pull-right">
-                <li class="span2">
-                    <a href="#" class="thumbnail" title="Nice pussy">
-                        <img src="http://placekitten.com/300/200" alt="">
-                    </a>
-                </li>
-                <li class="span2">
-                    <a href="#" class="thumbnail">
-                        <img src="http://placekitten.com/300/200" alt="">
-                    </a>
-                </li>
-                <li class="span2">
-                    <a href="#" class="thumbnail">
-                        <img src="http://placekitten.com/300/200" alt="">
-                    </a>
-                </li>
-                <li class="span2">
-                    <a href="#" class="thumbnail">
-                        <img src="http://placekitten.com/300/200" alt="">
-                    </a>
-                </li>
-            </ul>
             <a class="btn"><i class="icon-download"></i> Download album</a>
         </div>
     </div>
+    <ul class="thumbnails">
+        {% for image in gallery.images %}
+            <li class="span2">
+                <a href="{{ app.request.basepath }}/view/{{ gallery.ident }}/{{ image.hash }}" class="thumbnail">
+                    <img src="{{ app.request.basepath }}/thumbnail/{{ image.hash }}" alt="">
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 
