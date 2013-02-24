@@ -33,8 +33,12 @@ class Parser
 
                 while (($file = $directory->read()) !== false) {
                     if ($this->isImage($file)) {
-                        $images[] = new Image($this->path.$name.
+                        $image = new Image($this->path.$name.
                             DIRECTORY_SEPARATOR.$file);
+
+                        $image->generateThumbnail(THUMBNAIL_PATH);
+
+                        $images[] = $image;
                     }
                 }
 

@@ -2,6 +2,7 @@
 
 define('DB_PATH', __DIR__.'/app.db');
 define('GALLERIES_PATH', 'galleries/');
+define('THUMBNAIL_PATH', 'thumbnails/');
 
 require_once __DIR__.'/vendor/autoload.php'; 
 
