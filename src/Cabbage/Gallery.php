@@ -7,6 +7,11 @@ class Gallery
     private $name;
     private $images = array();
 
+    public function addImage(Image $image)
+    {
+        $this->images[] = $image;
+    }
+
     public function addImages(array $images)
     {
         $this->images += $images;
