@@ -74,11 +74,24 @@ class Controller
     public function view(Request $request, Application $app, $gallery, $hash)
     {
         $database = new Database($app);
+        $gallery = $database->getGallery($gallery);
+        $image = $gallery->getImage($hash);
+        $response = new Response();
 
-        return $app['twig']->render('view.html.twig', array(
-            'gallery' => $database->getGallery($gallery),
-            'image' => $database->getImage($hash)
-        ));
+        if ($gallery === null || $image === null) {
+            $response->setStatusCode(404);
+        }
+        else {
+            $response->setContent(
+                $app['twig']->render('view.html.twig', array(
+                    'gallery' => $gallery,
+                    'image' => $image
+                ))
+            );
+            $response->setStatusCode(200);
+        }
+
+        return $response;
     }
 }
 

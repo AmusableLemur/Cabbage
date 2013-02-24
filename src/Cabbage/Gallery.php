@@ -27,6 +27,17 @@ class Gallery
         return strtolower(str_replace(' ', '_', $this->name));
     }
 
+    public function getImage($hash)
+    {
+        foreach ($this->images as $image) {
+            if ($image->getHash() === $hash) {
+                return $image;
+            }
+        }
+
+        return null;
+    }
+
     public function getImages()
     {
         return $this->images;
