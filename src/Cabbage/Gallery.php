@@ -77,6 +77,16 @@ class Gallery
         return $this->images[$this->getImageKey($hash) - 1];
     }
 
+    public function hasNext($hash)
+    {
+        return isset($this->images[$this->getImageKey($hash) + 1]);
+    }
+
+    public function hasPrevious($hash)
+    {
+        return isset($this->images[$this->getImageKey($hash) - 1]);
+    }
+
     public function setName($name)
     {
         $this->name = $name;
