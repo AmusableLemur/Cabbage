@@ -1,4 +1,5 @@
 app.db
+archives/*
 galleries/*
 thumbnails/*
 vendor
