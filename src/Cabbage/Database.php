@@ -19,16 +19,16 @@ class Database
     {
         $this->db->executeUpdate(
             "CREATE TABLE IF NOT EXISTS galleries (
-                galleryId INTEGER PRIMARY KEY,
+                id INTEGER PRIMARY KEY,
                 name TEXT,
-                nameHash TEXT
+                hash TEXT
             );
 
             CREATE TABLE IF NOT EXISTS images (
-                imageId INTEGER PRIMARY KEY,
+                id INTEGER PRIMARY KEY,
                 galleryId INTEGER,
-                imageHash TEXT,
-                filename TEXT
+                hash TEXT,
+                filepath TEXT
             );"
         );
     }
@@ -36,29 +36,56 @@ class Database
     public function getGalleries()
     {
         $galleries = array();
-        $result = $this->db->fetchAll("SELECT galleryId, name FROM galleries");
+        $result = $this->db->fetchAll("SELECT hash FROM galleries");
 
         foreach ($result as $row) {
-            $gallery = new Gallery();
-            $gallery->setName($row['name']);
-
-            $images = $this->db->fetchAll(
-                "SELECT
-                    imageHash AS hash,
-                    filename
-                FROM images
-                WHERE galleryID = ?",
-                array($row['galleryId'])
-            );
-
-            foreach ($images as $image) {
-                $gallery->addImage(new Image($image['filename'], $image['hash']));
-            }
-
-            $galleries[] = $gallery;
+            $galleries[] = $this->getGallery($row['hash']);
         }
 
         return $galleries;
+    }
+
+    public function getGallery($hash)
+    {
+        $result = $this->db->fetchAssoc(
+            "SELECT
+                id,
+                name
+            FROM galleries
+            WHERE hash = ?",
+            array($hash)
+        );
+
+        $gallery = new Gallery();
+
+        $gallery->setName($result['name']);
+
+        $images = $this->db->fetchAll(
+            "SELECT
+                hash,
+                filepath
+            FROM images
+            WHERE galleryId = ?",
+            array($result['id'])
+        );
+
+        foreach ($images as $image) {
+            $gallery->addImage(new Image($image['filepath'], $image['hash']));
+        }
+
+        return $gallery;
+    }
+
+    public function getImage($hash)
+    {
+        $filepath = $this->db->fetchColumn(
+            "SELECT filepath
+            FROM images
+            WHERE hash = ?",
+            array($hash)
+        );
+
+        return new Image($filepath, $hash);
     }
 
     public function storeGallery(Gallery $gallery)
@@ -66,7 +93,7 @@ class Database
         $this->db->executeUpdate(
             "INSERT INTO galleries (
                 name,
-                nameHash
+                hash
             ) VALUES (
                 :name,
                 :hash
@@ -77,23 +104,25 @@ class Database
             )
         );
 
+        $galleryId = $this->db->lastInsertId();
+
         $this->db->beginTransaction();
 
         foreach ($gallery->getImages() as $image) {
             $this->db->executeUpdate(
                 "INSERT INTO images (
                     galleryId,
-                    imageHash,
-                    filename
+                    hash,
+                    filepath
                 ) VALUES (
                     :gallery,
                     :hash,
                     :file
                 )",
                 array(
-                    'gallery' => $this->db->lastInsertId(),
+                    'gallery' => $galleryId,
                     'hash' => $image->getHash(),
-                    'file' => $image->getFileName()
+                    'file' => $image->getFilePath()
                 )
             );
         }

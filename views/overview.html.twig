@@ -4,8 +4,8 @@
     <ul class="thumbnails">
         {% for gallery in galleries if gallery != null %}
             <li class="span3">
-                <a href="{{ app.request.basepath }}/view/{{ gallery.name }}/{{ gallery.getCoverImage.getFileName }}" class="thumbnail" title="{{ gallery.name }}">
-                    <img src="{{ app.request.basepath }}/thumbnails/{{ gallery.getCoverImage.getHash }}.jpg" alt="">
+                <a href="{{ app.request.basepath }}/view/{{ gallery.name|replace({' ': '_'})|lower }}/{{ gallery.getCoverImage.getHash }}" class="thumbnail" title="{{ gallery.name }}">
+                    <img src="{{ app.request.basepath }}/thumbnail/{{ gallery.getCoverImage.getHash }}" alt="">
                 </a>
             </li>
         {% endfor %}

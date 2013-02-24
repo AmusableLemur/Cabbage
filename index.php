@@ -27,9 +27,19 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->get('/', 'Cabbage\Controller::overview');
 
 /**
- * Shows a single image
+ * Shows an image from a gallery
  */
-$app->get('/view/{gallery}/{image}', 'Cabbage\Controller::view');
+$app->get('/view/{gallery}/{hash}', 'Cabbage\Controller::view');
+
+/**
+ * Loads an image
+ */
+$app->get('/image/{hash}', 'Cabbage\Controller::image');
+
+/**
+ * Loads a thumbnail
+ */
+$app->get('/thumbnail/{hash}', 'Cabbage\Controller::thumbnail');
 
 /**
  * Refreshes the database
