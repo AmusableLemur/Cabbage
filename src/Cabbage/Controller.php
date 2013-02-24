@@ -78,9 +78,17 @@ class Controller
     public function search(Request $request, Application $app, $terms)
     {
         $database = new Database($app);
+        $galleries = $database->findGalleries($terms);
+        $messages = array();
+
+        if (count($galleries) < 1) {
+            $messages[] = "Nothing found :(";
+        }
 
         return $app['twig']->render('overview.html.twig', array(
-            'galleries' => $database->findGalleries($terms)
+            'title' => 'Search results for '.$terms,
+            'galleries' => $galleries,
+            'messages' => $messages
         ));
     }
 
