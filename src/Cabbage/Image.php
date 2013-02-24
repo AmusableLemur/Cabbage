@@ -8,6 +8,7 @@ use Imagine\Image\ImageInterface;
 
 class Image
 {
+    private $data;
     private $file;
     private $hash;
     private $filepath;
@@ -29,6 +30,37 @@ class Image
             ->save($path.$this->hash.'.jpg');
     }
 
+    public function getBitDepth()
+    {
+        return $this->data['bits'];
+    }
+
+    public function getChannels()
+    {
+        $channels = $this->data['channels'];
+
+        switch ($channels) {
+            case 3:
+                return $channels.' (RGB)';
+            case 4:
+                return $channels.' (CMYK)';
+        }
+
+        return $channels;
+    }
+
+    /**
+     * Should generate EXIF-data, however EXIF doesn't exist for GIF or PNG
+     */
+    private function getData()
+    {
+        if ($this->data === null) {
+            $this->data = getimagesize($this->filepath);
+        }
+
+        return $this->data;
+    }
+
     public function getFilePath()
     {
         return $this->filepath;
@@ -39,11 +71,14 @@ class Image
         return $this->hash;
     }
 
+    public function getHeight()
+    {
+        return $this->getData()[1];
+    }
+
     public function getMimeType()
     {
-        $finfo = new \finfo(FILEINFO_MIME);
-
-        return $finfo->file($this->filepath);
+        return $this->getData()['mime'];
     }
 
     public function getRawData()
@@ -60,6 +95,11 @@ class Image
         }
         
         return file_get_contents($thumbnail);
+    }
+
+    public function getWidth()
+    {
+        return $this->getData()[0];
     }
 }
 
