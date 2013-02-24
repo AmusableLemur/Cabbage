@@ -21,6 +21,7 @@ class Controller
             $response->setContent($image->getRawData());
             $response->setStatusCode(200);
             $response->headers->set('Content-Type', $image->getMimeType());
+            $response->headers->set('Cache-Control', 'max-age=2592000');
         }
 
         return $response;
@@ -66,6 +67,7 @@ class Controller
             $response->setContent($image->getThumbnail());
             $response->setStatusCode(200);
             $response->headers->set('Content-Type', 'image/jpeg');
+            $response->headers->set('Cache-Control', 'max-age=2592000');
         }
 
         return $response;
