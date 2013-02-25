@@ -59,6 +59,8 @@ class Controller
 
     public function refresh(Request $request, Application $app)
     {
+        set_time_limit(60 * 60 * 24);
+        
         if (file_exists(DB_PATH)) {
             unlink(DB_PATH);
         }
