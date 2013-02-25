@@ -28,17 +28,7 @@ class Parser
                     return null;
                 }
 
-                $directory = dir($this->path.$name);
-                $images = array();
-
-                while (($file = $directory->read()) !== false) {
-                    if ($this->isImage($file)) {
-                        $image = new Image($this->path.$name.
-                            DIRECTORY_SEPARATOR.$file);
-
-                        $images[] = $image;
-                    }
-                }
+                $images = $this->loadImagesFromDirectory($this->path.$name);
 
                 if (count($images) < 1) {
                     return null;
@@ -79,6 +69,26 @@ class Parser
         $extension = strtolower($extension);
 
         return in_array($extension, array('jpg', 'png', 'gif'));
+    }
+
+    /**
+     * Finds images in a given folder and returns them in an array as instances
+     * of Image
+     * @param  string $directory The directory to search in
+     * @return array             Array of Image
+     */
+    private function loadImagesFromDirectory($directory)
+    {
+        $dir = dir($directory);
+        $images = array();
+
+        while (($file = $dir->read()) !== false) {
+            if ($this->isImage($file)) {
+                $images[] = new Image($directory.DIRECTORY_SEPARATOR.$file);
+            }
+        }
+
+        return $images;
     }
 }
 
