@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+
+{% block body %}
+    <div class="row" style="margin-bottom: 10px">
+        <div class="span8">
+            <ul class="thumbnails">
+                <div class="thumbnail span8">
+                    <img src="/image/{{ image }}" alt="">
+                </div>
+            </ul>
+        </div>
+        <div class="span4">
+            <legend>
+                {{ image }}
+            </legend>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2">Image information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# <tr>
+                        <td>Width</td>
+                        <td>{{ image.width }}px</td>
+                    </tr>
+                    <tr>
+                        <td>Height</td>
+                        <td>{{ image.height }}px</td>
+                    </tr>
+                    <tr>
+                        <td>Bit depth</td>
+                        <td>{{ image.bitDepth }}</td>
+                    </tr>
+                    <tr>
+                        <td>Channels</td>
+                        <td>{{ image.channels }}</td>
+                    </tr>
+                    <tr>
+                        <td>MIME-type</td>
+                        <td>{{ image.mimeType }}</td>
+                    </tr>}#
+                </tbody>
+            </table>
+            {# <div class="btn-group btn-block row-fluid" id="navigation">
+                {% if gallery.hasPrevious(image.hash) %}
+                    <a class="btn btn-large btn-primary" href="{{ app.request.basepath }}/view/{{ gallery.ident }}/{{ gallery.previousImage(image.hash).hash }}"><i class="icon-chevron-left"></i> Previous</a>
+                {% else %}
+                    <a class="btn btn-large btn-primary disabled"><i class="icon-chevron-left"></i> Previous</a>
+                {% endif %}
+
+                {% if gallery.hasNext(image.hash) %}
+                    <a class="btn btn-large btn-primary" href="{{ app.request.basepath }}/view/{{ gallery.ident }}/{{ gallery.nextImage(image.hash).hash }}">Next <i class="icon-chevron-right"></i></a>
+                {% else %}
+                    <a class="btn btn-large disabled">Next <i class="icon-chevron-right"></i></a>
+                {% endif %}
+            </div> #}
+        </div>
+    </div>
+{% endblock %}
+

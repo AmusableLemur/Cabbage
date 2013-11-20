@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}Cabbage{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//netdna.bootstrapcdn.com/bootswatch/2.3.1/cosmo/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        .caption {
+            background: rgba(255, 255, 255, 0.8);
+            display: block;
+            font-size: 1.3em;
+            bottom: 3px;
+            position: absolute;
+            text-align: center;
+        }
+
+        .thumbnail .caption {
+            color: black;
+        }
+
+        .btn-prev, .btn-next {
+            width: 50%;
+        }
+
+        #overview .thumbnail {
+            position: relative;
+        }
+
+        #navigation .btn {
+            box-sizing: border-box;
+            width: 50%;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="/">Cabbage</a>
+                <form action="/search" class="navbar-form pull-right" method="post">
+                    <input type="text" name="s" placeholder="Search">
+                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                </form>
+            </div>
+        </div>
+        {% block body %}
+            <ul class="thumbnails">
+                {% for image in images %}
+                    <li class="span3">
+                        <a href="/view/{{ image }}" class="thumbnail">
+                            <img src="/thumbnail/{{ image }}" alt="">
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="pagination pagination-centered">
+                <ul>
+                    {% if currentPage > 1 %}
+                        <li><a href="/page/{{ currentPage - 1 }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><a href="#">&laquo;</a></li>
+                    {% endif %}
+
+                    {% if totalPages > 10 %}
+                        {% if currentPage - 3 > 1 %}
+                            <li class="disabled"><a href="#">..</a></li>
+                            {% set minPage = currentPage - 3 %}
+                        {% else %}
+                            {% set minPage = 1 %}
+                        {% endif %}
+
+                        {% if currentPage + 3 < totalPages %}
+                            {% set maxPage = currentPage + 3 %}
+                        {% else %}
+                            {% set maxPage = totalPages %}
+                        {% endif %}
+
+                        {% for page in range(minPage, maxPage + 1) %}
+                            {% if page == currentPage %}
+                                <li class="active"><a href="/page/{{ page }}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="/page/{{ page }}">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if currentPage + 3 < totalPages %}
+                            <li class="disabled"><a href="#">..</a></li>
+                        {% endif %}
+                    {% else %}
+                        {% for page in range(1, totalPages + 1) %}
+                            {% if page == currentPage %}
+                                <li class="active"><a href="/page/{{ page }}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="/page/{{ page }}">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if currentPage != totalPages %}
+                        <li><a href="/page/{{ currentPage + 1 }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><a href="#">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endblock %}
+    </div>
+    <script type="text/javascript" src="//code.jquery.com/jquery.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/2.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
